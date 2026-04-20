@@ -1,241 +1,151 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exer Community - Full Panel</title>
-    <style>
-        /* --- ESTILOS BASE --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0a0a0f; color: white; min-height: 100vh; overflow-x: hidden; }
-        .hidden { display: none !important; }
-        a { text-decoration: none; color: inherit; }
+<meta charset="UTF-8">
+<title>Encuesta completa</title>
 
-        /* Header */
-        .header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 40px; background: #0f0f15; border-bottom: 1px solid #222;
-        }
-        .header h1 { color: #a855f7; font-size: 1.3rem; text-shadow: 0 0 10px #a855f7; }
+<!-- Chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        /* Contenedor */
-        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
-        .view-title { border-left: 4px solid #a855f7; padding-left: 15px; margin-bottom: 25px; font-size: 1.5rem; }
-
-        /* --- LISTA DE MENÚ --- */
-        .service-list { list-style: none; }
-        .service-item {
-            background: #12121a; border: 1px solid #222; border-radius: 10px;
-            padding: 18px; margin-bottom: 12px; display: flex; 
-            justify-content: space-between; align-items: center;
-            cursor: pointer; transition: 0.2s;
-        }
-        .service-item:hover { border-color: #a855f7; background: #161620; transform: scale(1.01); }
-        .info h3 { font-size: 1rem; margin-bottom: 4px; }
-        .info p { font-size: 0.8rem; color: #666; }
-        .action-btn { 
-            background: #1a1a25; color: #a855f7; border: 1px solid #332b40;
-            padding: 6px 12px; border-radius: 5px; font-size: 0.75rem; font-weight: bold;
-        }
-
-        /* --- APARTADOS DE CONTENIDO --- */
-        .content-card {
-            background: #12121a; border: 1px solid #222; padding: 25px; border-radius: 15px;
-            animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .back-btn {
-            background: #222; border: 1px solid #444; color: #ccc;
-            padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 15px;
-        }
-        .back-btn:hover { background: #333; color: white; }
-
-        .row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 0; border-bottom: 1px solid #222;
-        }
-        .row:last-child { border-bottom: none; }
-        
-        .dl-link { 
-            background: #7c3aed; color: white; padding: 8px 16px; 
-            border-radius: 5px; font-size: 0.85rem; font-weight: bold;
-            transition: 0.3s; cursor: pointer; border: none; display: inline-block;
-        }
-        .dl-link:hover { background: #9333ea; box-shadow: 0 0 10px #7c3aed; }
-
-        /* --- LOGIN --- */
-        #login-view {
-            display: flex; justify-content: center; align-items: center; height: 100vh;
-        }
-        .login-card {
-            background: #0f0f15; padding: 40px; border-radius: 15px;
-            border: 1px solid #222; width: 380px; text-align: center;
-        }
-        .login-card input {
-            width: 100%; padding: 12px; margin: 10px 0;
-            background: #16161c; border: 1px solid #333; color: white; border-radius: 8px; outline: none;
-        }
-        .btn-login {
-            width: 100%; padding: 12px; background: #7c3aed; border: none;
-            color: white; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px;
-        }
-    </style>
+<style>
+  body {
+    font-family: Arial;
+    background: #f4f6f8;
+  }
+  .container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  textarea, select, input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  button {
+    background: green;
+    color: white;
+    padding: 10px;
+    border: none;
+  }
+  canvas {
+    margin-top: 40px;
+  }
+</style>
 </head>
 <body>
 
-    <!-- VISTA LOGIN -->
-    <section id="login-view">
-        <div class="login-card">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png" width="80" alt="Logo">
-            <h2 style="color:#a855f7; margin: 15px 0;">EXER COMMUNITY</h2>
-            <form id="loginForm">
-                <input type="text" placeholder="Usuario" required>
-                <input type="password" placeholder="Contraseña" required>
-                <button type="submit" class="btn-login">LOGIN</button>
-            </form>
-            <p style="font-size: 0.7rem; color: #444; margin-top: 10px;">Acceso encriptado 256-bit</p>
-        </div>
-    </section>
+<div class="container">
+  <h2>Encuesta: Comercialización directa</h2>
 
-    <!-- VISTA DASHBOARD -->
-    <section id="dashboard-view" class="hidden">
-        <header class="header">
-            <h1>EXER COMMUNITY</h1>
-            <button class="back-btn" style="margin:0" onclick="location.reload()">Cerrar Sesión</button>
-        </header>
+  <form id="form">
+    <label>1. ¿Conoces alguna plataforma?</label>
+    <select id="p1" required>
+      <option value="">Selecciona</option>
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select>
 
-        <div class="container">
-            
-            <div id="main-menu">
-                <h2 class="view-title">Servicios y Descargas</h2>
-                <div class="service-list">
-                    <div class="service-item" onclick="showView('v-servicios')">
-                        <div class="info"><h3>🛠️ SERVICIOS</h3><p>Abrir Ticket de Soporte</p></div>
-                        <div class="action-btn">Gestionar</div>
-                    </div>
-                    <div class="service-item" onclick="showView('v-instalacion')">
-                        <div class="info"><h3>💾 INSTALACIÓN</h3><p>Root Checker y ZArchiver</p></div>
-                        <div class="action-btn">Descargar</div>
-                    </div>
-                    <div class="service-item" onclick="showView('v-emuladores')">
-                        <div class="info"><h3>🕹️ EMULADORES</h3><p>BlueStacks, MSI y MEmu</p></div>
-                        <div class="action-btn">Descargar</div>
-                    </div>
-                    <div class="service-item" onclick="showView('v-apk')">
-                        <div class="info"><h3>📱 APK</h3><p>Free Fire V7A y x86</p></div>
-                        <div class="action-btn">Descargar</div>
-                    </div>
-                    <div class="service-item" onclick="showView('v-basic')">
-                        <div class="info"><h3>⚡ PANEL FREE</h3><p>Funciones estándar</p></div>
-                        <div class="action-btn">DESCARGAR</div>
-                    </div>
-                    <div class="service-item" onclick="showView('v-premium')">
-                        <div class="info"><h3>💎 PANEL PREMIUM</h3><p>Acceso exclusivo VIP</p></div>
-                        <div class="action-btn" style="color: #fbbf24; border-color: #fbbf24;">Ticket</div>
-                    </div>
-                    <div class="service-item" onclick="showView('v-bypass')">
-                        <div class="info"><h3>🛡️ BYPASS</h3><p>Bypass para MEmu Player</p></div>
-                        <div class="action-btn">Descargar</div>
-                    </div>
-                    <a href="https://discord.gg/M2CwcKxC3c" target="_blank" class="service-item">
-                        <div class="info"><h3>💬 DISCORD</h3><p>Comunidad Oficial</p></div>
-                        <div class="action-btn" style="background: #5865F2; color: white;">Unirse</div>
-                    </a>
-                </div>
-            </div>
+    <label>2. ¿Cuál?</label>
+    <input type="text" id="p2">
 
-            <!-- APARTADOS -->
-            <div id="v-servicios" class="content-view hidden">
-                <button class="back-btn" onclick="showMainMenu()">← Volver</button>
-                <div class="content-card">
-                    <h2>Soporte Técnico</h2>
-                    <div class="row"><span>¿Necesitas ayuda?</span> <a href="https://discord.gg/M2CwcKxC3c" target="_blank" class="dl-link">ABRIR TICKET</a></div>
-                </div>
-            </div>
+    <label>3. ¿Por qué crees que no existen?</label>
+    <textarea id="p3"></textarea>
 
-            <div id="v-instalacion" class="content-view hidden">
-                <button class="back-btn" onclick="showMainMenu()">← Volver</button>
-                <div class="content-card">
-                    <h2>Instalación</h2>
-                    <div class="row"><span>Root Checker 6.5.3</span> <a href="https://www.mediafire.com/file/vlks4jjpqevzxeb/root-checker-6-5-3.apk/file" target="_blank" class="dl-link">Descargar</a></div>
-                    
-                    <div class="row"><span>ZArchiver 1.0.10</span> <a href="https://www.mediafire.com/file/h5imjil67a2tmfo/zarchiver-1-0-10.apk/file" target="_blank" class="dl-link">Descargar</a></div>
-                    <div class="row"><span>Requerimiento</span> <a href="https://drive.google.com/file/d/1vnvmAA_CcaQRYR1xQZGfIxGzVt9flhlg/view" target="_blank" class="dl-link">Descargar</a></div>
-                </div>
-                </div>
-            </div>
+    <label>4. ¿Son accesibles?</label>
+    <select id="p4">
+      <option value="">Selecciona</option>
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+      <option value="No sé">No sé</option>
+    </select>
 
-            <div id="v-emuladores" class="content-view hidden">
-                <button class="back-btn" onclick="showMainMenu()">← Volver</button>
-                <div class="content-card">
-                    <h2>Emuladores</h2>
-                    <div class="row"><span>BlueStacks 5.22</span> <a href="https://www.mediafire.com/file/v9ozp0fcvnf7cst/BlueStacksInstaller_5.22.130.1019_native_8d2cebda0808b05947f5cd0a800741cf_MzsxNSwwOzUsMTsxNSw0OzE1LDU7MTU%253D.exe/file" target="_blank" class="dl-link">Descargar</a></div>
-                    <div class="row"><span>MSI App Player</span> <a href="https://www.mediafire.com/file/if2n44lnyorr8xv/MSI-APP-Player.zip/file" target="_blank" class="dl-link">Descargar</a></div>
-                    <div class="row"><span>Ldplayer</span> <a href="https://www.mediafire.com/file/xkixi3xn6e11f7i/MEmu-setup-abroad-3681973d.exe/file" target="_blank" class="dl-link">Descargar</a></div>
-                    <div class="row"><span>MEmu Player</span> <a href="https://www.mediafire.com/file/xkixi3xn6e11f7i/MEmu-setup-abroad-3681973d.exe/file" target="_blank" class="dl-link">Descargar</a></div>
-                </div>
-            </div>
+    <label>5. ¿Qué necesitaría?</label>
+    <textarea id="p5"></textarea>
 
-            <div id="v-apk" class="content-view hidden">
-                <button class="back-btn" onclick="showMainMenu()">← Volver</button>
-                <div class="content-card">
-                    <h2>APKs Exer</h2>
-                    <div class="row"><span>Free Fire V7A</span> <a href="https://www.mediafire.com/file/efmdiw8sjlu7saz/FREE+FIRE+V7A+ATUALIZADO.xapk/file" target="_blank" class="dl-link">Descargar</a></div>
-                    <div class="row"><span>Free Fire tela actualizado</span> <a href="https://www.mediafire.com/file/uvizkp7dfjuywz8/NTX86.rar/file" target="_blank" class="dl-link">Descargar</a></div>
-                </div>
-            </div>
+    <label>6. ¿Quién podría ayudar?</label>
+    <textarea id="p6"></textarea>
 
-            <div id="v-basic" class="content-view hidden">
-                <button class="back-btn" onclick="showMainMenu()">← Volver</button>
-                <div class="content-card">
-                    <h2>Panel Free</h2>
-                    <p style="color:#888; margin-bottom: 20px;">.</p>
-                    <div class="row"><span>PANEL FREE COMO PARA EL FREE FIRE NORMAL Y TELA: USER:EXER PASS:12</span> <a href="https://www.mediafire.com/file/hfqix3tapoijda8/EXER+AIMBOT.rar/file" target="_blank" class="dl-link">DESCARGAR</a></div>
-                </div>
-            </div>
+    <label>7. ¿Cómo la promoverías?</label>
+    <textarea id="p7"></textarea>
 
-            <div id="v-premium" class="content-view hidden">
-                <button class="back-btn" onclick="showMainMenu()">← Volver</button>
-                <div class="content-card" style="border-color: #fbbf24;">
-                    <h2 style="color: #fbbf24;">Panel Premium VIP</h2>
-                    <p style="color:#888; margin-bottom: 20px;">Acceso restringido a usuarios VIP. Abre un ticket para comprar tu licencia.</p>
-                    <div class="row"><span>SI QUIERES ADQUIRIR NUESTRO PANEL PREMIUM ABRIR TICKET</span> <a href="https://discord.gg/eWXwhaGTgt" target="_blank" class="dl-link" style="background:#fbbf24; color:black">CREAR TICKET</a></div>
-                </div>
-            </div>
+    <button type="submit">Enviar respuesta</button>
+  </form>
 
-            <div id="v-bypass" class="content-view hidden">
-                <button class="back-btn" onclick="showMainMenu()">← Volver</button>
-                <div class="content-card">
-                    <h2>Bypass MEmu</h2>
-                   <div class="row"><span>Bypass Memu player (.rar)</span> <a href="https://www.mediafire.com/file/2lh1gbgryv7wxob/BYPASS_MEMU_PLAYER.rar/file" target="_blank" class="dl-link">Descargar</a></div>
-                    <div class="row"><span>Bypass Msi & BlueStacks (.rar)</span> <a href="https://www.mediafire.com/file/2lh1gbgryv7wxob/BYPASS_MEMU_PLAYER.rar/file" target="_blank" class="dl-link">Descargar</a></div>
-                </div>
-            </div>
+  <h3>Resultados en tiempo real</h3>
+  <canvas id="grafico"></canvas>
+</div>
 
-        </div>
-    </section>
+<!-- Firebase + lógica -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <script>
-        // Manejo de Login
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('login-view').classList.add('hidden');
-            document.getElementById('dashboard-view').classList.remove('hidden');
-        });
+// 🔥 PON TUS DATOS AQUÍ
+const firebaseConfig = {
+  apiKey: "AIzaSyCWk5vwOSvpb5TzH_8RasOyiIqEJjpQLHI",
+  authDomain: "exer-community.firebaseapp.com",
+  projectId: "exer-community"
+};
 
-        // Navegación
-        function showView(viewId) {
-            document.getElementById('main-menu').classList.add('hidden');
-            document.querySelectorAll('.content-view').forEach(v => v.classList.add('hidden'));
-            document.getElementById(viewId).classList.remove('hidden');
-        }
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-        function showMainMenu() {
-            document.querySelectorAll('.content-view').forEach(v => v.classList.add('hidden'));
-            document.getElementById('main-menu').classList.remove('hidden');
-        }
-    </script>
+// 📩 Enviar respuestas
+document.getElementById("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-</body>
-</html>
+  const datos = {
+    p1: document.getElementById("p1").value,
+    p2: document.getElementById("p2").value,
+    p3: document.getElementById("p3").value,
+    p4: document.getElementById("p4").value,
+    p5: document.getElementById("p5").value,
+    p6: document.getElementById("p6").value,
+    p7: document.getElementById("p7").value
+  };
+
+  await addDoc(collection(db, "encuestas"), datos);
+
+  alert("✅ Respuesta enviada");
+  document.getElementById("form").reset();
+});
+
+let chart;
+
+// 📊 Escuchar datos en tiempo real
+onSnapshot(collection(db, "encuestas"), (snapshot) => {
+  let si = 0;
+  let no = 0;
+
+  snapshot.forEach(doc => {
+    const r = doc.data().p1;
+    if (r === "Sí") si++;
+    if (r === "No") no++;
+  });
+
+  actualizarGrafico(si, no);
+});
+
+function actualizarGrafico(si, no) {
+  const ctx = document.getElementById("grafico");
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Sí", "No"],
+      datasets: [{
+        data: [si, no],
+        backgroundColor: ["green", "red"]
+      }]
+    }
+  });
+}
+</script>
+
+
